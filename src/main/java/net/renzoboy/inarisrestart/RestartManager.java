@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -26,6 +28,8 @@ public class RestartManager {
     private int totalSeconds;
     private int remainingSeconds;
     private String reason;
+
+    private final AtomicBoolean restarting = new AtomicBoolean(false);
 
     private boolean active = false;
 
@@ -114,16 +118,19 @@ public class RestartManager {
     }
 
     private void doRestart() {
+        if (!restarting.compareAndSet(false, true)) return;
         active = false;
         if (tickTask != null) tickTask.cancel(false);
+        if (scheduler != null) scheduler.shutdownNow();
 
         server.execute(() -> {
+            List<ServerPlayer> players = new java.util.ArrayList<>(server.getPlayerList().getPlayers());
             if (bossBar != null) {
-                for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+                for (ServerPlayer player : players) {
                     bossBar.removePlayer(player);
                 }
             }
-            for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            for (ServerPlayer player : players) {
                 player.connection.disconnect(Component.literal("Server is restarting. Come back soon!"));
             }
             server.halt(false);
