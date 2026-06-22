@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "inaris-restart",
+	"version": "${version}",
+	"name": "Inaris Restart",
+	"description": "Restart Command Generator for InariSMP.",
+	"authors": [
+		"Renzoboy"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/inaris-restart/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.renzoboy.inarisrestart.InarisRestart"
+		],
+		"fabric-datagen": [
+			"net.renzoboy.inarisrestart.InarisRestartDataGenerator"
+		],
+		"client": [
+			"net.renzoboy.inarisrestart.InarisRestartClient"
+		]
+	},
+	"mixins": [
+		"inaris-restart.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.1.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
