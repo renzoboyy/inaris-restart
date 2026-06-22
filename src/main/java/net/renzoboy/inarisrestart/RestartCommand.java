@@ -57,7 +57,7 @@ public class RestartCommand {
 
         String timeLabel = RestartManager.formatTime(seconds);
         src.sendSuccess(
-                () -> Component.literal("§cRestart scheduled in §f" + timeLabel + "§c. Reason: §f" + reason),
+                () -> Component.literal("§cRestarting in §f" + timeLabel + "§c. Reason: §f" + reason),
                 true
         );
         src.getServer().getPlayerList().broadcastSystemMessage(

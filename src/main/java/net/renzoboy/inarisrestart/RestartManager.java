@@ -58,7 +58,7 @@ public class RestartManager {
         bossBar = new ServerBossEvent(
                 java.util.UUID.randomUUID(),
                 buildBossBarName(),
-                BossEvent.BossBarColor.RED,
+                BossEvent.BossBarColor.WHITE,
                 BossEvent.BossBarOverlay.PROGRESS
         );
         bossBar.setProgress(1.0f);
